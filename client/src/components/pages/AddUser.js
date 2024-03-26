@@ -32,7 +32,8 @@ import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 // import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import DuoOutlinedIcon from "@material-ui/icons/DuoOutlined";
+// import DuoOutlinedIcon from "@material-ui/icons/DuoOutlined";
+import DefStreamLogo from "./logo.png";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsOutlinedIcon from "@material-ui/icons/SettingsOutlined";
 import PropTypes from "prop-types";
@@ -349,7 +350,11 @@ const AddUser = ({ addUser, setAlert, logout, auth, missions }) => {
             edge="start"
             className={clsx(open1 && classes.hide)}
           >
-            <DuoOutlinedIcon style={{ fontSize: 40 }} />
+            <img
+              alt="DefStream Logo"
+              src={DefStreamLogo}
+              style={{ width: "30px", height: "auto" }}
+            />{" "}
           </IconButton>
 
           <Typography variant="h6" className={classes.title}>
