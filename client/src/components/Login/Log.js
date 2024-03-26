@@ -19,7 +19,9 @@ import IconButton from "@material-ui/core/IconButton";
 import { Icon } from "@iconify/react";
 import eyeFill from "@iconify/icons-eva/eye-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
-import "./favicon.ico";
+import DefStreamLogo from "./favicon.png";
+import { styled } from "@mui/material/styles";
+import { lightBlue } from "@material-ui/core/colors";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,6 +46,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(lightBlue[900]),
+  backgroundColor: lightBlue[900],
+  "&:hover": {
+    backgroundColor: lightBlue[700],
+  },
+}));
 /////////////////////////////////////////////////////////////////////////////////////////////////////      Add Login
 
 function SignIn({ setAlert, login, auth }) {
@@ -82,22 +91,24 @@ function SignIn({ setAlert, login, auth }) {
       <CssBaseline />
       <div className="form-box">
         <p>
-          <img alt="DefStream Logo" src="favicon.ico" width="50" height="50" />{" "}
+          <img
+            alt="DefStream Logo"
+            src={DefStreamLogo}
+            style={{ width: "210px", height: "auto" }}
+          />{" "}
         </p>
         <Typography
           style={{ fontWeight: 600 }}
           variant="h6"
           color="textPrimary"
         >
-          {" "}
-          DefStream{" "}
+          {/* {" "}
+          DefStream{" "} */}
         </Typography>
 
         {/* <Typography component='h1' variant='h5' align='center'>
         DefStream
        </Typography> */}
-        <br></br>
-        <br></br>
 
         {/* <Typography component='h1'>
           Please enter your username and password.
@@ -143,7 +154,7 @@ function SignIn({ setAlert, login, auth }) {
           />
           <br></br>
           <br></br>
-          <Button
+          {/* <Button
             type="submit"
             fullWidth
             variant="contained"
@@ -152,7 +163,17 @@ function SignIn({ setAlert, login, auth }) {
             onSubmit={(e) => onSubmit(e)}
           >
             Sign In
-          </Button>
+          </Button> */}
+          <ColorButton
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onSubmit={(e) => onSubmit(e)}
+          >
+            Sign In
+          </ColorButton>
         </form>
       </div>
     </Container>

@@ -20,29 +20,29 @@ const Login = ({ setAlert, login1, id, auth }) => {
   totp.options = {
     // step: 30,
   };
-  onClick = async (e) => {
-    if (!id) {
-      try {
-        const device = await openDevice();
+  // onClick = async (e) => {
+  //   if (!id) {
+  //     try {
+  //       const device = await openDevice();
 
-        const productId = await getId(device);
-        //console.log("This is the ProductID:", productId);
+  //       const productId = await getId(device);
+  //       //console.log("This is the ProductID:", productId);
 
-        // const version = await getVersion(device);
-        // console.log("This is the device's name:",version);
+  //       // const version = await getVersion(device);
+  //       // console.log("This is the device's name:",version);
 
-        const secret = await getSecret(device);
-        //console.log("This is the secret'value stored in the device:",secret)
+  //       const secret = await getSecret(device);
+  //       //console.log("This is the secret'value stored in the device:",secret)
 
-        const secretSliced = await secret.slice(0, 8);
-        //console.log("This is the value of the secret sliced:", secretSliced);
+  //       const secretSliced = await secret.slice(0, 8);
+  //       //console.log("This is the value of the secret sliced:", secretSliced);
 
-        //const token = await totp.generate(secretSliced);
-        //console.log("This is the token:",token);
-        await login1(productId, secretSliced);
-      } catch {}
-    }
-  };
+  //       //const token = await totp.generate(secretSliced);
+  //       //console.log("This is the token:",token);
+  //       await login1(productId, secretSliced);
+  //     } catch {}
+  //   }
+  // };
 
   return (
     <div>
@@ -52,12 +52,15 @@ const Login = ({ setAlert, login1, id, auth }) => {
           <video src={video} autoPlay muted loop />
         </div>
 
-        {id && auth.msg === "Device Accepted!" ? (
-          <Slide direction="down" in={true} style={{ zIndex: 3 }}>
-            <div className=" animated fadeInDown animatedfadeInDown ">
-              <Log />{" "}
-            </div>
-          </Slide>
+        {/* {id && auth.msg === "Device Accepted!" ? ( */}
+
+        <Slide direction="down" in={true} style={{ zIndex: 3 }}>
+          <div className=" animated fadeInDown animatedfadeInDown ">
+            <Log />{" "}
+          </div>
+        </Slide>
+
+        {/*
         ) : (
           <Slide
             direction="down"
@@ -67,8 +70,8 @@ const Login = ({ setAlert, login1, id, auth }) => {
             <div className=" animated fadeInDown animatedfadeInDown ">
               <LogFail />{" "}
             </div>
-          </Slide>
-        )}
+        </Slide>
+        )}*/}
         {/* <Slide direction='down' in={id} style={{ zIndex: 3 }}>    
                     <div className=' animated fadeInDown animatedfadeInDown '>         
                       <Log />{" "}
