@@ -1,0 +1,11 @@
+.form-box {
+  width: 390px;
+  height: 450px;
+  background-color: rgba(243, 243, 243, 0.897);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  opacity: 0.9;
+  border-radius: 1.5%;
+}

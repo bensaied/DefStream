@@ -1,0 +1,143 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  body{
+    font-family: "San Francisco","Helvetica Neue","Helvetica","Arial", sans-serif;
+    font-size: 80%;
+    color: #2d2d2d;
+    background: #f2fcfb;
+  }
+  
+  ::selection {
+    background: none;
+  }
+  
+ #input1 {
+    position: absolute;
+    left: 10px;
+    position: absolute;
+    right: 5px;
+    min-width: 290px;
+    display: flex;
+   
+  }
+  #button1 {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+  }
+  #input1:hover {
+    background: rgb(222, 226, 228);
+  }
+  
+  #input1:focus {
+    background: white;
+  }
+  
+  .App {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .Phone {
+    position: absolute;
+    right: 5px;
+    
+    height: 860px;
+    width: 360px;
+    min-width: 240px;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    background: white;
+    
+  }
+  
+  .StatusBar {
+      
+    margin: 0 auto;
+    height: 40px;
+    max-height: 40px;
+    min-height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .Message {
+    display: flex;
+    color: white;
+    flex-shrink: 0;
+    opacity: 0;
+    animation: 0.2s linear MessageSlideUp 0.3s forwards;
+  }
+  
+  .Message__text {
+    background: #4294ff;
+    border-radius: 12px;
+    padding: 6px 10px;
+    max-width: 160px;
+  }
+  
+  @keyframes MessageSlideUp {
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  .MessageList {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 2000px;
+    border-top: 1px solid grey;
+    border-bottom: 1px solid grey;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  .MessageList::-webkit-scrollbar {width: 3px; height:1px;transition:all .5s;z-index:10;}
+  .MessageList::-webkit-scrollbar-track {background-color: white;}
+  .MessageList::-webkit-scrollbar-thumb {
+    background-color: #bec4c8; 
+    border-radius:3px;
+  }
+  
+  .Inputbox {
+    height: 22px;
+    min-height: 22px;
+    padding: 5px;
+    margin-bottom: 8px;
+  }
+  
+  .Inputbox__message {
+    border-radius: 8px;
+    border: 1px solid grey;
+    padding: 2px 6px;
+    width: 140px;
+    outline: none;
+    caret-color: #4294ff;
+  }
+  
+  .submit {
+    border-radius: 8px;
+    box-shadow: none;
+    border: 1px solid grey;
+    margin: 0 4px;
+    padding: 3px 7px 2px;
+    font-size: 0.75rem;
+  }
+
+video {
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+}
