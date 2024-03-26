@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -22,28 +22,28 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  usb: {
-    secret: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    productId: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-  },
+  // usb: {
+  //   secret: {
+  //     type: String,
+  //     required: true,
+  //     unique: true,
+  //   },
+  //   productId: {
+  //     type: String,
+  //     required: true,
+  //     unique: true,
+  //   },
+  // },
   userType: {
     type: String,
-    enum: ['user', 'admin', 'broadcaster'],
-    default: 'user',
+    enum: ["user", "admin", "broadcaster"],
+    default: "user",
   },
   location: {
     type: String,
     required: false,
   },
-  allowedMissions: [{  type: mongoose.Schema.Types.ObjectId, ref: 'mission' }],
+  allowedMissions: [{ type: mongoose.Schema.Types.ObjectId, ref: "mission" }],
 });
 
-module.exports = User = mongoose.model('user', UserSchema);
+module.exports = User = mongoose.model("user", UserSchema);

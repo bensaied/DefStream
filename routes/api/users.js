@@ -130,7 +130,6 @@ router.post(
           id: user.id,
         },
       };
-      console.log("payload : ", payload);
       // JWT SignIn : Creation access Token
       jwt.sign(payload, JWTSECRET, { expiresIn: 360000 }, (err, token) => {
         if (err) throw err;
@@ -142,8 +141,6 @@ router.post(
         Name: `${user.name}`,
         Username: `${user.username}`,
         Type: `${user.userType}`,
-        ProductId: `${user.usb.productId}`,
-        Secret: `${user.usb.secret}`,
       });
     } catch (err) {
       console.error(err.message);
