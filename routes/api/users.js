@@ -10,6 +10,7 @@ const Mission = require("../../models/Mission");
 const auth = require("../../middleware/auth");
 const userLog = require("../../logger/index");
 const crypto = require("crypto");
+const { log } = require("console");
 
 ///////////////////////////////////////////////////////////////////////////////////AuthToken
 // @route   Get api/users/auth
@@ -31,49 +32,49 @@ router.get("/auth", auth.token, async (req, res) => {
 // @route  api/users/auth
 // @desc   Login 1 user
 // @access Public
-router.post(
-  "/auth",
-  //Input validation
-  [
-    check("productId", "Please include a product id").not().isEmpty(),
-    check("secret", "A key is required").not().isEmpty(),
-  ],
-  async (req, res) => {
-    //if errors then show errors message
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    const { productId, secret } = req.body;
-    console.log("This is the user credentials to log in:", productId + secret);
-    console.log(typeof productId);
+// router.post(
+//   "/auth",
+//   //Input validation
+//   [
+//     check("productId", "Please include a product id").not().isEmpty(),
+//     check("secret", "A key is required").not().isEmpty(),
+//   ],
+//   async (req, res) => {
+//     //if errors then show errors message
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     const { productId, secret } = req.body;
+//     console.log("This is the user credentials to log in:", productId + secret);
+//     console.log(typeof productId);
 
-    try {
-      //See if the user exists
-      let user = await User.findOne({ "usb.productId": productId.toString() });
-      const usb = await user.usb;
-      const isValid = usb.secret == secret;
-      if (!user || !isValid) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "Invalid credentials." }] });
-      }
+//     try {
+//       //See if the user exists
+//       let user = await User.findOne({ "usb.productId": productId.toString() });
+//       const usb = await user.usb;
+//       const isValid = usb.secret == secret;
+//       if (!user || !isValid) {
+//         return res
+//           .status(400)
+//           .json({ errors: [{ msg: "Invalid credentials." }] });
+//       }
 
-      const payload = {
-        id: user.id,
-      };
-      res.json(payload);
-      ///////////////////////////////////////////////////////////////////////LOG LOGIN 1
-      userLog.info("Login (Dongle Accepted) !", {
-        ProductId: `${productId}`,
-        Secret: `${usb.secret}`,
-      });
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server error");
-    }
-  }
-);
+//       const payload = {
+//         id: user.id,
+//       };
+//       res.json(payload);
+//       ///////////////////////////////////////////////////////////////////////LOG LOGIN 1
+//       userLog.info("Login (Dongle Accepted) !", {
+//         ProductId: `${productId}`,
+//         Secret: `${usb.secret}`,
+//       });
+//     } catch (err) {
+//       console.error(err.message);
+//       res.status(500).send("Server error");
+//     }
+//   }
+// );
 
 ///////////////////////////////////////////////////////////////////////////////////Log In USERNAME& PWD
 
@@ -81,7 +82,7 @@ router.post(
 // @desc   Login user
 // @access Public
 router.post(
-  "/auth/:usbId",
+  "/auth/login",
   //Input validation
   [
     check("username", "Please include a Username.").not().isEmpty(),
@@ -94,23 +95,23 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const usbId = req.params.usbId;
-    console.log("UsbID:", req.params.usbId);
-    if (!usbId.match(/^[0-9a-fA-F]{24}$/)) {
-      return res.status(400).json({
-        errors: [
-          {
-            msg: "User does not exist",
-          },
-        ],
-      });
-    }
-
+    // const usbId = req.params.usbId;
+    // console.log("UsbID:", req.params.usbId);
+    // if (!usbId.match(/^[0-9a-fA-F]{24}$/)) {
+    //   return res.status(400).json({
+    //     errors: [
+    //       {
+    //         msg: "User does not exist",
+    //       },
+    //     ],
+    //   });
+    // }
     const { username, password } = req.body;
+
     try {
       //See if the user exists
 
-      let user = await User.findById(usbId);
+      let user = await User.findOne({ username });
       if (!user) {
         return res
           .status(400)
@@ -129,7 +130,7 @@ router.post(
           id: user.id,
         },
       };
-
+      console.log("payload : ", payload);
       // JWT SignIn : Creation access Token
       jwt.sign(payload, JWTSECRET, { expiresIn: 360000 }, (err, token) => {
         if (err) throw err;

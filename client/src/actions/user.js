@@ -132,7 +132,7 @@ export const login1 = (productId, usbtoken) => async (dispatch) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////  Login User (EMAIL & PWD)
-export const login = (username, password, usbId) => async (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
   const config = {
     headers: {
       "content-type": "application/json",
@@ -142,8 +142,7 @@ export const login = (username, password, usbId) => async (dispatch) => {
   const body = JSON.stringify({ username, password });
 
   try {
-    const res = await axios.post("api/users/auth/" + usbId.id, body, config);
-
+    const res = await axios.post("api/users/auth/login", body, config);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,

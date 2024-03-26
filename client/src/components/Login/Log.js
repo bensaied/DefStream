@@ -68,10 +68,10 @@ function SignIn({ setAlert, login, auth }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    let usbId;
-    if (auth.id) usbId = auth.id;
-    //console.log(usbId);
-    login(username, password, usbId);
+    // let usbId;
+    // if (auth.id) usbId = auth.id;
+    // console.log(usbId);
+    login(username, password);
   };
 
   const [showPassword, setShowPassword] = useState(false);
