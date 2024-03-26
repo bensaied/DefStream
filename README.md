@@ -43,7 +43,7 @@ Install DefStream with npm
 
 ```bash
   # Install the packages
-  npm install
+  npm install --force
 ```
 
 Then run both sides with:

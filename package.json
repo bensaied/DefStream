@@ -1,6 +1,6 @@
 {
   "name": "defstream",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "a realtime video streaming web application",
   "main": "server.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "server",
     "chat"
   ],
-  "author": "DC (THE TEAM)",
+  "author": "Oussama Ben Saied",
   "license": "MIT",
   "dependencies": {
     "@date-io/moment": "^1.3.13",
@@ -29,7 +29,7 @@
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "dotenv": "^8.2.0",
-    "drivelist": "^11.1.0",
+    "drivelist": "^8.0.10",
     "env": "0.0.2",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.0.0",
