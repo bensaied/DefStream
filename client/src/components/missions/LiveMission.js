@@ -242,7 +242,12 @@ const LiveMission = ({
           }))
         }
       >
-        <Toolbar>
+        <Toolbar
+          style={{
+            background: "linear-gradient(to right, #9966cc, #b1defb)",
+          }}
+        >
+          {" "}
           <IconButton
             color="inherit"
             aria-label="open drawer1"
@@ -256,7 +261,6 @@ const LiveMission = ({
               style={{ width: "30px", height: "auto" }}
             />{" "}
           </IconButton>
-
           <Typography variant="h6" className={classes.title}>
             DefStream
           </Typography>
@@ -269,7 +273,7 @@ const LiveMission = ({
               <img
                 src={account}
                 alt="account"
-                style={{ height: 40, width: 40 }}
+                style={{ height: 35, width: 35 }}
               />
               {/* <AccountCircleIcon style={{ color: grey[50] }} />{" "} */}
             </Button>

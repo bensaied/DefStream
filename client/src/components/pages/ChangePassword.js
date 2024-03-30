@@ -102,7 +102,12 @@ function ChangePassword({ auth, logout, changePassword }) {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar
+          style={{
+            background: "linear-gradient(to right, #9966cc, #b1defb)",
+          }}
+        >
+          {" "}
           <AccountCircle />
           &nbsp;
           <Typography variant="h6" className={classes.title}>

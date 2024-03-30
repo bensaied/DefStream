@@ -208,7 +208,12 @@ function Mission({ setAlert, logout, auth }) {
           }))
         }
       >
-        <Toolbar>
+        <Toolbar
+          style={{
+            background: "linear-gradient(to right, #9966cc, #b1defb)",
+          }}
+        >
+          {" "}
           <IconButton
             color="inherit"
             aria-label="open drawer1"
@@ -222,7 +227,6 @@ function Mission({ setAlert, logout, auth }) {
               style={{ width: "30px", height: "auto" }}
             />{" "}
           </IconButton>
-
           <Typography variant="h6" className={classes.title}>
             Def Stream
           </Typography>
@@ -235,7 +239,7 @@ function Mission({ setAlert, logout, auth }) {
               <img
                 src={account}
                 alt="account"
-                style={{ height: 40, width: 40 }}
+                style={{ height: 35, width: 35 }}
               />
               {/* <AccountCircleIcon style={{ color: grey[50] }} />{" "} */}
             </Button>
