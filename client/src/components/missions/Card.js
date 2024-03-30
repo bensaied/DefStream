@@ -202,12 +202,12 @@ function MediaCard({
             component="p"
           >
             {status === "Live" ? (
-              <img src={LIVE} alt="LIVE" style={{ height: 36, width: 44 }} />
+              <img src={LIVE} alt="LIVE" style={{ height: 30, width: 40 }} />
             ) : status === "Scheduled" ? (
               <img
                 src={Scheduled}
                 alt="Scheduled"
-                style={{ height: 30, width: 30 }}
+                style={{ height: 25, width: 25 }}
               />
             ) : status === "Rescheduled" ? (
               <img

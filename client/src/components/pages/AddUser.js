@@ -232,8 +232,7 @@ const AddUser = ({ addUser, setAlert, logout, auth, missions }) => {
     userType: "",
     password: "Def$tre0m",
     location: "",
-    productId: "",
-    secret: "",
+
     //allowedMissions: ""
   });
   const {
@@ -242,8 +241,7 @@ const AddUser = ({ addUser, setAlert, logout, auth, missions }) => {
     password,
     userType,
     location,
-    productId,
-    secret /*, allowedMissions*/,
+    /*, allowedMissions*/
   } = formData;
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -256,8 +254,7 @@ const AddUser = ({ addUser, setAlert, logout, auth, missions }) => {
       password,
       userType,
       location,
-      productId,
-      secret /*, allowedMissions*/,
+      /*, allowedMissions*/
     });
     if (auth.msg === "User Added") {
       auth.redirect = true;
@@ -601,7 +598,7 @@ const AddUser = ({ addUser, setAlert, logout, auth, missions }) => {
                   }}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <TextField
                   required
                   variant="outlined"
@@ -612,8 +609,8 @@ const AddUser = ({ addUser, setAlert, logout, auth, missions }) => {
                   value={productId}
                   onChange={(e) => onChange(e)}
                 />
-              </Grid>
-              <Grid item xs={12}>
+              </Grid> */}
+              {/* <Grid item xs={12}>
                 <TextField
                   required
                   variant="outlined"
@@ -634,7 +631,7 @@ const AddUser = ({ addUser, setAlert, logout, auth, missions }) => {
                     ),
                   }}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"

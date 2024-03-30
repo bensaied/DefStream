@@ -5,7 +5,7 @@ import { getId, openDevice, getSecret } from "../../usb_driver/webUsb";
 import video from "./video.mp4";
 import Slide from "@material-ui/core/Slide";
 import "./login.css";
-import { login1 } from "../../actions/user";
+// import { login1 } from "../../actions/user";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { totp } from "otplib";
@@ -83,7 +83,7 @@ const Login = ({ setAlert, login1, id, auth }) => {
 };
 Login.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  login1: PropTypes.func.isRequired,
+  // login1: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -91,4 +91,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { setAlert, login1 })(Login);
+export default connect(mapStateToProps, { setAlert /*login1*/ })(Login);

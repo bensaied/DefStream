@@ -207,8 +207,8 @@ router.post(
   auth.token,
   //Input validation
   [
-    check("secret", "Please include a Secret.").not().isEmpty(),
-    check("productId", "Please include a ProductId.").not().isEmpty(),
+    // check("secret", "Please include a Secret.").not().isEmpty(),
+    // check("productId", "Please include a ProductId.").not().isEmpty(),
     check(
       "password",
       "Please enter a password with 8 or more characters"
@@ -227,9 +227,8 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { username, productId, secret } = req.body;
-    console.log("This is the PiD of the new User", productId);
-    console.log("This is the secret of the new User", secret);
+    const { username } = req.body;
+
     try {
       //See if admin
       const admin = await User.findById(req.user.id).select("-password");
@@ -241,9 +240,8 @@ router.post(
       }
 
       // let user = await User.findOne({ "email": email.toString() });
-      let user1 = await User.findOne({ "usb.productId": productId.toString() });
-      let user2 = await User.findOne({ "usb.secret": secret.toString() });
-      let user3 = await User.findOne({ name: req.body.name });
+
+      let user1 = await User.findOne({ name: req.body.name });
 
       const {
         name,
@@ -257,7 +255,7 @@ router.post(
       } = req.body;
 
       let user = await User.findOne({ username });
-      if (user3) {
+      if (user1) {
         return res
           .status(400)
           .json({ errors: [{ msg: "User with this Name already exists." }] });
@@ -267,29 +265,13 @@ router.post(
           errors: [{ msg: "User with this Username already exists." }],
         });
       }
-      if (user1) {
-        return res.status(400).json({
-          errors: [{ msg: "User with this Product ID already exists." }],
-        });
-      }
-      if (user2) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "User with this Secret already exists." }] });
-      }
 
       user = new User({
         name,
         username,
         password,
-        secret,
-        productId,
         userType,
         location,
-        usb: {
-          productId,
-          secret,
-        },
         //allowedMissions,
         firstConnect,
         date,
@@ -362,8 +344,6 @@ router.post(
         Name: `${user.name}`,
         Username: `${user.username}`,
         Type: `${user.userType}`,
-        ProductId: `${user.usb.productId}`,
-        Secret: `${user.usb.secret}`,
       });
     } catch (err) {
       console.error(err.message);
@@ -540,8 +520,6 @@ router.put(
         //Password: `${newpassword}`,
         Type: `${user.userType}`,
         Location: `${user.location}`,
-        ProductId: `${user.usb.productId}`,
-        Secret: `${user.usb.secret}`,
       });
       user = await User.findByIdAndUpdate(
         req.user.id,
@@ -680,8 +658,6 @@ router.put(
         //Password: `${newpassword}`,
         Type: `${user.userType}`,
         Location: `${user.location}`,
-        ProductId: `${user.usb.productId}`,
-        Secret: `${user.usb.secret}`,
       });
       user = await User.findByIdAndUpdate(
         req.user.id,
@@ -692,7 +668,7 @@ router.put(
           new: true,
         }
       ).select("-password");
-      console.log(user);
+      // console.log(user);
 
       return res.json(user);
     } catch (err) {

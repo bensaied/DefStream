@@ -40,8 +40,7 @@ export const addUser =
     password,
     userType,
     location,
-    productId,
-    secret /*, allowedMissions*/,
+    /*, allowedMissions*/
   }) =>
   async (dispatch) => {
     const config = {
@@ -56,8 +55,8 @@ export const addUser =
       password,
       userType,
       location,
-      productId,
-      secret /*, allowedMissions*/,
+
+      /*, allowedMissions*/
     });
 
     try {
@@ -102,34 +101,34 @@ export const loadUser = () => async (dispatch) => {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////  Login 1 User (DONGLE)
-export const login1 = (productId, usbtoken) => async (dispatch) => {
-  const config = {
-    headers: {
-      "content-type": "application/json",
-    },
-  };
-  const secret = usbtoken;
-  const body = JSON.stringify({ productId, secret });
+// export const login1 = (productId, usbtoken) => async (dispatch) => {
+//   const config = {
+//     headers: {
+//       "content-type": "application/json",
+//     },
+//   };
+//   const secret = usbtoken;
+//   const body = JSON.stringify({ productId, secret });
 
-  try {
-    const res = await axios.post("api/users/auth", body, config);
+//   try {
+//     const res = await axios.post("api/users/auth", body, config);
 
-    dispatch({
-      type: LOGIN1_SUCCESS,
-      payload: res.data,
-    });
-  } catch (err) {
-    const errors = err.response.data.errors;
+//     dispatch({
+//       type: LOGIN1_SUCCESS,
+//       payload: res.data,
+//     });
+//   } catch (err) {
+//     const errors = err.response.data.errors;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
-    }
+//     if (errors) {
+//       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
+//     }
 
-    dispatch({
-      type: LOGIN_FAIL1,
-    });
-  }
-};
+//     dispatch({
+//       type: LOGIN_FAIL1,
+//     });
+//   }
+// };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////  Login User (EMAIL & PWD)
 export const login = (username, password) => async (dispatch) => {

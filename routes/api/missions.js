@@ -6,7 +6,9 @@ const Mission = require("../../models/Mission");
 const auth = require("../../middleware/auth");
 const missionLog = require("../../logger/index");
 const Chat = require("../../models/Chat");
-
+const { exec } = require("child_process");
+const formidable = require("formidable");
+const fs = require("fs");
 /**
  * @route   POST api/missions
  * @desc    add new mission
@@ -601,132 +603,253 @@ router.put("/autoChange", auth.token, async (req, res) => {
   }
 });
 
-//////////////////////////////////////////////////////////GET USB DEVICES
+//////////////////////////////////////////////////////////GET USB DEVICES Linux
 
-// GETING USB DEVICES WHICH MOUNTED ONLY ON /media
-router.get("/usb-devices", function (req, res) {
-  const { spawn } = require("child_process");
-  const { exec } = require("child_process");
-  const lsblk = spawn("lsblk", ["-o", "NAME,SIZE,TYPE,MOUNTPOINT"]);
+// GETING USB DEVICES WHICH MOUNTED ONLY ON /media on LINUX
+// router.get("/usb-devices", function (req, res) {
+//   const { spawn } = require("child_process");
+//   const { exec } = require("child_process");
+//   const lsblk = spawn("lsblk", ["-o", "NAME,SIZE,TYPE,MOUNTPOINT"]);
 
-  exec("lsblk -Po NAME,SIZE,TYPE,MOUNTPOINT", (error, stdout, stderr) => {
-    if (error) {
-      console.log(`Error: ${error.message}`);
-      return;
-    }
-    if (stderr) {
-      console.log(`stderr: ${stderr}`);
-      return;
-    }
-    const output = stdout.toString().split("\n");
-    const driveNames = [];
+//   exec("lsblk -Po NAME,SIZE,TYPE,MOUNTPOINT", (error, stdout, stderr) => {
+//     if (error) {
+//       console.log(`Error: ${error.message}`);
+//       return;
+//     }
+//     if (stderr) {
+//       console.log(`stderr: ${stderr}`);
+//       return;
+//     }
+//     const output = stdout.toString().split("\n");
+//     const driveNames = [];
 
-    for (let i = 0; i < output.length; i++) {
-      const parts = output[i].split(" ");
-      if (parts.length !== 4) {
-        continue;
+//     for (let i = 0; i < output.length; i++) {
+//       const parts = output[i].split(" ");
+//       if (parts.length !== 4) {
+//         continue;
+//       }
+//       const [name, size, type, mountpoint] = parts;
+
+//       if (mountpoint.startsWith('MOUNTPOINT="/media')) {
+//         const deviceName = mountpoint.slice(
+//           mountpoint.lastIndexOf("/") + 1,
+//           mountpoint.length - 1
+//         );
+//         driveNames.push(deviceName);
+//       }
+//     }
+//     res.json(driveNames);
+//   });
+
+//   lsblk.stderr.on("data", (data) => {
+//     console.error(`stderr: ${data}`);
+//     res.status(500).json({ error: "Error finding USB devices" });
+//   });
+
+//   lsblk.on("close", (code) => {
+//     console.log(`lsblk exited with code ${code}`);
+//   });
+// });
+
+//////////////////////////////////////////////////////////GET USB DEVICES Windows
+
+// GETING USB DEVICES WHICH MOUNTED ONLY ON /media on Windows
+router.get("/usb-devices", (req, res) => {
+  exec(
+    "wmic diskdrive get DeviceID,Size,MediaType",
+    (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error: ${error.message}`);
+        res.status(500).json({ error: "Error finding USB devices" });
+        return;
       }
-      const [name, size, type, mountpoint] = parts;
-
-      if (mountpoint.startsWith('MOUNTPOINT="/media')) {
-        const deviceName = mountpoint.slice(
-          mountpoint.lastIndexOf("/") + 1,
-          mountpoint.length - 1
-        );
-        driveNames.push(deviceName);
+      if (stderr) {
+        console.error(`stderr: ${stderr}`);
+        res.status(500).json({ error: "Error finding USB devices" });
+        return;
       }
+      const lines = stdout.trim().split("\r\r\n");
+      const usbDevices = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const parts = lines[i].trim().split(/\s{2,}/);
+        const deviceID = parts[0];
+        const size = parts[1];
+        const mediaType = parts[2];
+
+        if (mediaType === "USB") {
+          const deviceName = deviceID.split("\\").pop();
+          usbDevices.push(deviceName);
+        }
+      }
+
+      res.json(usbDevices);
     }
-    res.json(driveNames);
-  });
-
-  lsblk.stderr.on("data", (data) => {
-    console.error(`stderr: ${data}`);
-    res.status(500).json({ error: "Error finding USB devices" });
-  });
-
-  lsblk.on("close", (code) => {
-    console.log(`lsblk exited with code ${code}`);
-  });
+  );
 });
 
-////////////////////////////////////////////////////////// SAVE THE RECORDED VIDEO TO A USB STORAGE DEVICE
-router.post("/save-recorded-video", function (req, res) {
-  const formidable = require("formidable");
-  const fs = require("fs");
+////////////////////////////////////////////////////////// SAVE THE RECORDED VIDEO TO A USB STORAGE DEVICE On Linux
+// router.post("/save-recorded-video", function (req, res) {
+//   const formidable = require("formidable");
+//   const fs = require("fs");
 
+//   const form = new formidable.IncomingForm();
+//   form.parse(req, function (err, fields, files) {
+//     const selectedDevice = fields.selectedDevice;
+//     const mission = fields.mission;
+//     if (!selectedDevice) {
+//       console.log("USB storage device not found.");
+//       res.status(400).send("USB storage device not found.");
+//       return;
+//     }
+
+//     // Get the file path of USB device
+//     const { spawn } = require("child_process");
+//     const { exec } = require("child_process");
+//     exec("lsblk -Po NAME,SIZE,TYPE,MOUNTPOINT", (error, stdout, stderr) => {
+//       if (error) {
+//         console.log(`Error: ${error.message}`);
+//         res
+//           .status(500)
+//           .send("Error retrieving USB storage device information.");
+//         return;
+//       }
+//       if (stderr) {
+//         console.log(`stderr: ${stderr}`);
+//         res
+//           .status(500)
+//           .send("Error retrieving USB storage device information.");
+//         return;
+//       }
+//       const output = stdout.toString().split("\n");
+
+//       for (let i = 0; i < output.length; i++) {
+//         const parts = output[i].split(" ");
+//         if (parts.length !== 4) {
+//           continue;
+//         }
+//         const [name, size, type, mountpoint] = parts;
+
+//         if (mountpoint.startsWith('MOUNTPOINT="/media')) {
+//           const mediaIndex = mountpoint.indexOf("/media/");
+//           const devicePath = mountpoint.substring(
+//             mediaIndex,
+//             mountpoint.indexOf("/", mediaIndex + 8) + 1
+//           );
+//           // Get Current date (year, month, day, hours and minutes)
+//           let currentDate = new Date();
+//           const year = currentDate.getFullYear();
+//           const month = currentDate.getMonth() + 1;
+//           const day = currentDate.getDate();
+//           const hours = currentDate.getHours();
+//           const minutes = currentDate.getMinutes();
+//           const seconds = currentDate.getSeconds();
+
+//           const filename = `${mission}-${year}-${month}-${day}_${hours}-${minutes}-${seconds}.mp4`;
+//           const filepath = `${devicePath}${selectedDevice}/${filename}`;
+
+//           // Create read stream from recorded video file
+//           const stream = fs.createReadStream(files.recordedVideoData.filepath);
+
+//           // Pipe the stream to the USB storage device
+//           stream
+//             .pipe(fs.createWriteStream(filepath))
+//             .on("error", function (error) {
+//               console.log("Error saving file:", error);
+//               res.status(500).send("Error saving file to USB storage device.");
+//               return;
+//             })
+//             .on("finish", function () {
+//               console.log("File saved to USB storage device.");
+//               res.send("File saved to USB storage device.");
+//             });
+//         }
+//       }
+//     });
+//   });
+// });
+////////////////////////////////////////////////////////// SAVE THE RECORDED VIDEO TO A USB STORAGE DEVICE On Windows
+
+router.post("/save-recorded-video", (req, res) => {
   const form = new formidable.IncomingForm();
-  form.parse(req, function (err, fields, files) {
+
+  form.parse(req, (err, fields, files) => {
     const selectedDevice = fields.selectedDevice;
     const mission = fields.mission;
+
     if (!selectedDevice) {
       console.log("USB storage device not found.");
       res.status(400).send("USB storage device not found.");
       return;
     }
 
-    // Get the file path of USB device
-    const { spawn } = require("child_process");
-    const { exec } = require("child_process");
-    exec("lsblk -Po NAME,SIZE,TYPE,MOUNTPOINT", (error, stdout, stderr) => {
-      if (error) {
-        console.log(`Error: ${error.message}`);
-        res
-          .status(500)
-          .send("Error retrieving USB storage device information.");
-        return;
-      }
-      if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        res
-          .status(500)
-          .send("Error retrieving USB storage device information.");
-        return;
-      }
-      const output = stdout.toString().split("\n");
-
-      for (let i = 0; i < output.length; i++) {
-        const parts = output[i].split(" ");
-        if (parts.length !== 4) {
-          continue;
+    // Use wmic to get the drive letter of the USB storage device
+    exec(
+      "wmic logicaldisk get deviceid,volumename",
+      (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error: ${error.message}`);
+          res
+            .status(500)
+            .send("Error retrieving USB storage device information.");
+          return;
         }
-        const [name, size, type, mountpoint] = parts;
-
-        if (mountpoint.startsWith('MOUNTPOINT="/media')) {
-          const mediaIndex = mountpoint.indexOf("/media/");
-          const devicePath = mountpoint.substring(
-            mediaIndex,
-            mountpoint.indexOf("/", mediaIndex + 8) + 1
-          );
-          // Get Current date (year, month, day, hours and minutes)
-          let currentDate = new Date();
-          const year = currentDate.getFullYear();
-          const month = currentDate.getMonth() + 1;
-          const day = currentDate.getDate();
-          const hours = currentDate.getHours();
-          const minutes = currentDate.getMinutes();
-          const seconds = currentDate.getSeconds();
-
-          const filename = `${mission}-${year}-${month}-${day}_${hours}-${minutes}-${seconds}.mp4`;
-          const filepath = `${devicePath}${selectedDevice}/${filename}`;
-
-          // Create read stream from recorded video file
-          const stream = fs.createReadStream(files.recordedVideoData.filepath);
-
-          // Pipe the stream to the USB storage device
-          stream
-            .pipe(fs.createWriteStream(filepath))
-            .on("error", function (error) {
-              console.log("Error saving file:", error);
-              res.status(500).send("Error saving file to USB storage device.");
-              return;
-            })
-            .on("finish", function () {
-              console.log("File saved to USB storage device.");
-              res.send("File saved to USB storage device.");
-            });
+        if (stderr) {
+          console.error(`stderr: ${stderr}`);
+          res
+            .status(500)
+            .send("Error retrieving USB storage device information.");
+          return;
         }
+
+        const lines = stdout.trim().split("\r\r\n");
+        let usbDrivePath = "";
+
+        for (let i = 1; i < lines.length; i++) {
+          const parts = lines[i].trim().split(/\s{2,}/);
+          const driveLetter = parts[0].trim();
+          const volumeName = parts[1].trim();
+
+          if (volumeName === selectedDevice) {
+            usbDrivePath = driveLetter;
+            break;
+          }
+        }
+
+        if (!usbDrivePath) {
+          console.log("USB storage device not found.");
+          res.status(400).send("USB storage device not found.");
+          return;
+        }
+
+        // Get Current date (year, month, day, hours, minutes, and seconds)
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = ("0" + (currentDate.getMonth() + 1)).slice(-2);
+        const day = ("0" + currentDate.getDate()).slice(-2);
+        const hours = ("0" + currentDate.getHours()).slice(-2);
+        const minutes = ("0" + currentDate.getMinutes()).slice(-2);
+        const seconds = ("0" + currentDate.getSeconds()).slice(-2);
+
+        const filename = `${mission}-${year}-${month}-${day}_${hours}-${minutes}-${seconds}.mp4`;
+        const filepath = `${usbDrivePath}\\${filename}`;
+
+        // Create read stream from recorded video file
+        const stream = fs.createReadStream(files.recordedVideoData.path);
+
+        // Pipe the stream to the USB storage device
+        stream
+          .pipe(fs.createWriteStream(filepath))
+          .on("error", (error) => {
+            console.error("Error saving file:", error);
+            res.status(500).send("Error saving file to USB storage device.");
+          })
+          .on("finish", () => {
+            console.log("File saved to USB storage device.");
+            res.send("File saved to USB storage device.");
+          });
       }
-    });
+    );
   });
 });
 module.exports = router;
