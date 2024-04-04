@@ -6,10 +6,10 @@ It securely streams video content and encrypts mission chats for secure storage.
 
 ## Screenshots
 
-<div style="display: flex; flex-wrap: wrap;">
-    <img src="screenshots/1.png" alt="Screenshot 1" style="width: calc(100% / 5 - 10px); margin-right: 10px; margin-bottom: 10px;">
-    <img src="screenshots/2.png" alt="Screenshot 2" style="width: calc(100% / 5 - 10px); margin-right: 10px; margin-bottom: 10px;">
-    <img src="screenshots/3.png" alt="Screenshot 20" style="width: calc(100% / 5 - 10px); margin-right: 10px; margin-bottom: 10px;">
+<div style="display: flex;">
+    <img src="images/1.png" alt="Screenshot 1" style="width: 200px; margin-right: 10px;">
+    <img src="images/2.png" alt="Screenshot 1" style="width: 200px; margin-right: 10px;">
+    <img src="images/3.png" alt="Screenshot 1" style="width: 200px; margin-right: 10px;">
 </div>
 
 ## 🧰 Tech Stack
