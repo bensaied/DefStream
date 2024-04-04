@@ -6,9 +6,11 @@ It securely streams video content and encrypts mission chats for secure storage.
 
 ## Screenshots
 
-![1](https://github.com/bensaied/DefStream/assets/157906188/65b4a7d8-e939-4e6d-812d-efb5102975fd?raw=true)
-![2](https://github.com/bensaied/DefStream/assets/157906188/af901173-01b1-4e22-a57e-ed89c9d216cf?raw=true)
-![3](https://github.com/bensaied/DefStream/assets/157906188/c9a7b174-ec63-4f92-9d69-d1acc17cd09a?raw=true)
+<div style="display: flex; flex-wrap: wrap;">
+    <img src="1.png" alt="Screenshot 1" style="width: calc(100% / 5 - 10px); margin-right: 10px; margin-bottom: 10px;">
+    <img src="2.png" alt="Screenshot 2" style="width: calc(100% / 5 - 10px); margin-right: 10px; margin-bottom: 10px;">
+    <img src="3.png" alt="Screenshot 20" style="width: calc(100% / 5 - 10px); margin-right: 10px; margin-bottom: 10px;">
+</div>
 
 ## 🧰 Tech Stack
 
