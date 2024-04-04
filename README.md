@@ -1,5 +1,7 @@
 # DefStream
 
+![Logo](https://i.ibb.co/m8bBDC7/Def-Stream.png)
+
 DefStream is a web application enabling live video streaming and real-time chat for missions, empowering users to engage with audiences during events, training sessions, or updates.
 
 It securely streams video content and encrypts mission chats for secure storage.
