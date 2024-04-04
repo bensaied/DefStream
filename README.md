@@ -6,7 +6,9 @@ It securely streams video content and encrypts mission chats for secure storage.
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![1](https://github.com/bensaied/DefStream/assets/157906188/65b4a7d8-e939-4e6d-812d-efb5102975fd?raw=true)
+![2](https://github.com/bensaied/DefStream/assets/157906188/af901173-01b1-4e22-a57e-ed89c9d216cf?raw=true)
+![3](https://github.com/bensaied/DefStream/assets/157906188/c9a7b174-ec63-4f92-9d69-d1acc17cd09a?raw=true)
 
 ## 🧰 Tech Stack
 
