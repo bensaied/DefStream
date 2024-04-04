@@ -4,7 +4,9 @@ DefStream is a web application enabling live video streaming and real-time chat 
 
 It securely streams video content and encrypts mission chats for secure storage.
 
-## Demo
+## Screenshots
+
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
 
 ## 🧰 Tech Stack
 
@@ -43,7 +45,7 @@ Install DefStream with npm
 
 ```bash
   # Install the packages
-  npm install --force
+  npm install
 ```
 
 Then run both sides with:
