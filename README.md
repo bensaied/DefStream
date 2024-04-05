@@ -33,7 +33,7 @@ It securely streams video content and encrypts mission chats for secure storage.
 
 ## 🧰 Tech Stack
 
-**Client:** React , Redux, WebRTC
+**Client:** React , Redux, WebRTC, WebSocket
 
 **Server:** Node, Express, MongoDB
 
